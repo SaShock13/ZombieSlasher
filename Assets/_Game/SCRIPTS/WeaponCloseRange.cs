@@ -8,7 +8,7 @@ public class WeaponCloseRange : MonoBehaviour
     {
         if(collision.gameObject.TryGetComponent<EnemyHealth>(out EnemyHealth enemyHealth))
         {
-            enemyHealth.TakeDamage(50);
+            enemyHealth.TakeDamage(30);
         }
     }
 }

@@ -7,11 +7,13 @@ using UnityEngine.Rendering;
 
 public class PlayerHealth : MonoBehaviour
 {
-    private float health = 100;
+    private float health = 1000;
     private bool isAlive = true;
     public UnityEvent<float> onHealthChanged;
     private Volume _volume;
     private Bloom _bloom;
+    [SerializeField] GameObject damageEffect;
+
     private void Awake()
     {
         _volume = FindObjectOfType<Volume>();
@@ -45,7 +47,11 @@ public class PlayerHealth : MonoBehaviour
     private IEnumerator Damage()
     {
         _bloom.active = true;
+        damageEffect.SetActive(true);
+
         yield return new WaitForSeconds(0.5f);
+
+        damageEffect.SetActive(false);
         _bloom.active = false;
 
     }

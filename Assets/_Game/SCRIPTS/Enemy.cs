@@ -9,7 +9,8 @@ public enum EnemyBehState
     Idle,
     Steering,
     Attack,
-    Wandering
+    Wandering,
+    Death
 }
 
 public class Enemy : MonoBehaviour
@@ -57,6 +58,11 @@ public class Enemy : MonoBehaviour
     {
         state = EnemyBehState.Idle;
     }
+    public void ChangeOnDeath()
+    {
+        state = EnemyBehState.Death;
+    }
+
 
 
     private void Update()
@@ -105,11 +111,19 @@ public class Enemy : MonoBehaviour
                         //state = EnemyBehState.Steering;
                         break;
                     }
+
+                case EnemyBehState.Death:
+                    {
+                        animator.SetTrigger("Death");
+                        isAlive = false;
+                        break;
+                    }
                 default: break;
             }
 
         }
         else agent.isStopped =true;
+
         //else animator.SetBool("Attacking", false);
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
-    private int health = 1000;
+    private int health = 2000;
     private Animator animator;
     private Enemy enemy;
     private Rigidbody rb;
@@ -42,9 +42,12 @@ public class EnemyHealth : MonoBehaviour
     private void Death()
     {
         //Õ≈ ”Ã»–¿≈“ »« —Œ—“ŒﬂÕ»ﬂ ¿“¿ »!!!
-        animator.SetTrigger("Death");
+        //animator.SetTrigger("Death");
         enemy.isAlive = false;
         rb.isKinematic = true;
         collider.enabled = false;
+        enemy.ChangeOnDeath();
     }
+
+
 }

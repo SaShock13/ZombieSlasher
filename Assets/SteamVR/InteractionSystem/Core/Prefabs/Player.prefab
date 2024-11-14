@@ -311,7 +311,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.68, z: 0}
+  m_Center: {x: 0, y: 0.86, z: 0}
 --- !u!114 &7808147216697746788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -344,6 +344,7 @@ MonoBehaviour:
   onHealthChanged:
     m_PersistentCalls:
       m_Calls: []
+  damageEffect: {fileID: 0}
 --- !u!1 &109154
 GameObject:
   m_ObjectHideFlags: 0
@@ -3111,8 +3112,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6032230388291472158, guid: df84c63ff90205e48a3810e4d36e7f62,
         type: 3}
+      propertyPath: skeletonMainPose
+      value: 
+      objectReference: {fileID: 11400000, guid: 4e2a3d59a99fe1f4da58fe4a50464bf8,
+        type: 2}
+    - target: {fileID: 6032230388291472158, guid: df84c63ff90205e48a3810e4d36e7f62,
+        type: 3}
       propertyPath: previewLeftInstance
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6032230388291472158, guid: df84c63ff90205e48a3810e4d36e7f62,
+        type: 3}
+      propertyPath: previewPoseSelection
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6467686105932529504, guid: df84c63ff90205e48a3810e4d36e7f62,
         type: 3}
