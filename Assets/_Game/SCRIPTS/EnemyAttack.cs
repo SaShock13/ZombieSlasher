@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
+
     [SerializeField] Collider handCollider;
+
 
     private void OnTriggerEnter(Collider other)
     {        

@@ -5,18 +5,18 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
-    private int health = 2000;
+    [SerializeField, Range(10,2000)] private int health = 20;
     private Animator animator;
     private Enemy enemy;
     private Rigidbody rb;
-    private Collider collider;
+    private Collider bodyCollider;
 
     private void Start()
     {
         animator = GetComponentInChildren<Animator>();
         enemy = GetComponentInChildren<Enemy>();
         rb = GetComponent<Rigidbody>();
-        collider = GetComponent<Collider>();
+        bodyCollider = GetComponent<Collider>();
     }
 
     public void TakeDamage(int damage)
@@ -43,11 +43,22 @@ public class EnemyHealth : MonoBehaviour
     {
         //ÍÅ ÓÌÈĞÀÅÒ ÈÇ ÑÎÑÒÎßÍÈß ÀÒÀÊÈ!!!
         //animator.SetTrigger("Death");
-        enemy.isAlive = false;
-        rb.isKinematic = true;
-        collider.enabled = false;
-        enemy.ChangeOnDeath();
+
+        enemy.SetState(EnemyBehState.Death);
+        //rb.isKinematic = true;
+        //bodyCollider.enabled = false;
     }
 
+
+    /// <summary>
+    /// ×èñòî äëÿ òåñòèğîâàíèÿ
+    /// </summary>
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Z))
+        {
+            Death();
+        }
+    }
 
 }

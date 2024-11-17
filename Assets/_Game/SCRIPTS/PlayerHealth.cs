@@ -28,6 +28,7 @@ public class PlayerHealth : MonoBehaviour
             {
                 health -= damage;
                 onHealthChanged.Invoke(health);
+                Debug.Log($"Health : {health}");
                 print(health);
                 StartCoroutine(Damage());
                 if (health <= 0)

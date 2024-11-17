@@ -22,63 +22,58 @@ public class Enemy : MonoBehaviour
     public bool isMovable = false;
 
     public float remDist;
+    public EnemyBehState currentState;
 
-
-    public EnemyBehState state = EnemyBehState.Idle;
+    [SerializeField] private EnemyBehState initialState = EnemyBehState.Wandering;
     [SerializeField] private Transform startTransform;
     [SerializeField] private Transform endTransform;
+
     private Transform currentDestination;
     private EnemyStateHandler stateHandler;
 
     [SerializeField] private GameObject enemyModelPrefab;
+    [SerializeField] private GameObject enemyRagdollPrefab;
+    private GameObject currentModel;
+    private GameObject currentRgdll;
 
     private void Awake()
     {
-        Instantiate<GameObject>(enemyModelPrefab, transform);
+        currentModel = Instantiate<GameObject>(enemyModelPrefab, transform);
+        currentRgdll = Instantiate<GameObject>(enemyRagdollPrefab,transform.parent.transform);
         playerTransform = FindObjectOfType<Player>().transform;
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
         currentDestination = endTransform;
         stateHandler = GetComponent<EnemyStateHandler>();
+        currentState = initialState;
+
     }
 
-    public void ChangeOnSteering()
-    {
-        state = EnemyBehState.Steering;
-    }
-    public void ChangeOnWandering()
-    {
-        state = EnemyBehState.Wandering;
-    }
-    public void ChangeOnAttack()
-    {
-        state = EnemyBehState.Attack;
-    }
-    public void ChangeOnIdle()
-    {
-        state = EnemyBehState.Idle;
-    }
-    public void ChangeOnDeath()
-    {
-        state = EnemyBehState.Death;
-    }
 
+    public void SetState(EnemyBehState stateToSet)
+    {
+        if (currentState!=stateToSet)
+        {
+            currentState = stateToSet; 
+        }
+    }
 
 
     private void Update()
     {
         if (isAlive)
         {
-            switch (state)
+            switch (currentState)
             {
                 case EnemyBehState.Idle:
                     {
+                       ClearAnimationState();
                         animator.SetTrigger("Idle");
                         break;
                     }
                 case EnemyBehState.Wandering:
                     {
-                        animator.SetTrigger("Walk");
+                        animator.SetBool("Walk",true);
                         agent.destination = currentDestination.position;
                         stateHandler.StartCheck();
 
@@ -97,7 +92,7 @@ public class Enemy : MonoBehaviour
                         agent.destination = playerTransform.position;
                         if (agent.remainingDistance <= agent.stoppingDistance + 0.02f)
                         {
-                            state = EnemyBehState.Attack;
+                            currentState = EnemyBehState.Attack;
                         }
                         break;
                     }
@@ -106,24 +101,36 @@ public class Enemy : MonoBehaviour
                         animator.SetTrigger("Attack");
                         if (agent.remainingDistance > agent.stoppingDistance + 0.02f)
                         {
-                            state = EnemyBehState.Steering;
+                            currentState = EnemyBehState.Steering;
                         }
-                        //state = EnemyBehState.Steering;
                         break;
                     }
 
                 case EnemyBehState.Death:
                     {
-                        animator.SetTrigger("Death");
-                        isAlive = false;
+                        ClearAnimationState();
+                        Death();
                         break;
                     }
                 default: break;
             }
-
         }
         else agent.isStopped =true;
+    }
 
-        //else animator.SetBool("Attacking", false);
+    private void ClearAnimationState()
+    {
+        animator.SetBool("Walk", false);
+    }
+
+    private void Death()
+    {
+        currentModel.SetActive(false);
+        currentRgdll.transform.position = transform.position;
+        currentRgdll.transform.rotation = transform.rotation;
+        currentRgdll.SetActive(true);
+        currentRgdll.GetComponent<EnemyRgdll>().StopConvulsing();
+        isAlive = false;
+        gameObject.SetActive(false);
     }
 }

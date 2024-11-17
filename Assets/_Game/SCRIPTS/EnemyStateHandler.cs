@@ -11,10 +11,10 @@ public class EnemyStateHandler : MonoBehaviour
     [SerializeField] float attackDistance = 0.5f;
 
     [SerializeField] float checkSightInterval = 0.5f;
-    public UnityEvent  onPlayerInSight;
-    public UnityEvent onPlayerInAttackDistance;
-    public UnityEvent onPlayerOutAttackDistance;
-    public UnityEvent onPlayerOutSight;
+    public UnityEvent<EnemyBehState>  onPlayerInSight;
+    public UnityEvent<EnemyBehState> onPlayerInAttackDistance;
+    //public UnityEvent onPlayerOutAttackDistance;
+    //public UnityEvent onPlayerOutSight;
     private Player player;
     [HideInInspector]public bool isNeedToCheck = false;
     public bool isPlayerInView = false;
@@ -50,21 +50,21 @@ public class EnemyStateHandler : MonoBehaviour
             distanceToPlayer = (player.transform.position - transform.position).magnitude;
             if (distanceToPlayer <= attackDistance)
             {
-                onPlayerInAttackDistance.Invoke();
+                onPlayerInAttackDistance.Invoke(EnemyBehState.Attack);
             }
             else
             {
-                onPlayerOutAttackDistance.Invoke();
+                //onPlayerOutAttackDistance.Invoke();
                 if (distanceToPlayer <= sightDistance)
                 {
                     isPlayerInView = true;
 
-                    onPlayerInSight.Invoke();
+                    onPlayerInSight.Invoke(EnemyBehState.Steering);
                 }
                 else
                 {
                     isPlayerInView = false;
-                    onPlayerOutSight.Invoke();
+                    ///onPlayerOutSight.Invoke();
                 }
             }
 
