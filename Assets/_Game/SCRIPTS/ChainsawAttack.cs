@@ -5,8 +5,10 @@ using UnityEngine;
 public class ChainsawAttack : MonoBehaviour
 {
     [SerializeField] GameObject bloodFXPrefab;
+
     private GameObject bloodFx;
     private EnemyHealth enemyHealth;
+    private Vector3 FXPosition;
 
     private void Start()
     {
@@ -16,24 +18,22 @@ public class ChainsawAttack : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        print("Attack With Saw");
         if (collision.gameObject.TryGetComponent<EnemyHealth>(out enemyHealth))
         {
-            bloodFx.transform.position = collision.GetContact(1).point;
-            bloodFx.transform.rotation = Quaternion.Euler(collision.GetContact(1).normal);
+            FXPosition = collision.GetContact(0).point;
+            bloodFx.transform.position = FXPosition;
+            bloodFx.transform.rotation = Quaternion.LookRotation(collision.GetContact(0).normal);
             bloodFx.SetActive(true);
+            bloodFx.GetComponentInChildren<ParticleSystem>().Play();
             StartCoroutine(SawCutting());
         }
     }
 
-
-
     private void OnCollisionExit(Collision collision)
     {
-        bloodFx.SetActive(false);
+        //bloodFx.SetActive(false);
         StopAllCoroutines();
     }
-
 
     IEnumerator SawCutting()
     {
@@ -43,6 +43,4 @@ public class ChainsawAttack : MonoBehaviour
             yield return new WaitForSeconds(1);
         }
     }
-
-
 }

@@ -17,7 +17,12 @@ public class PlayerHealth : MonoBehaviour
     private void Awake()
     {
         _volume = FindObjectOfType<Volume>();
-        _volume.profile.TryGet(out _bloom);
+        //_volume.profile.TryGet(out _bloom);
+        
+    }
+    private void OnEnable()
+    {
+        onHealthChanged.Invoke(health);
     }
 
     public void TakeDamage(float damage)

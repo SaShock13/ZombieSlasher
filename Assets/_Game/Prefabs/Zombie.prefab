@@ -88,7 +88,7 @@ MonoBehaviour:
   initialState: 3
   startTransform: {fileID: 2101075586299981590}
   endTransform: {fileID: 1857077040796809931}
-  enemyModelPrefab: {fileID: 1724560249318943110, guid: b53000789f03d2a4395090d1b8e3d4c0,
+  enemyModelPrefab: {fileID: 3183957746073718447, guid: 7853f2ce34b13b24598c300cec7a18b1,
     type: 3}
   enemyRagdollPrefab: {fileID: 2463595719328797306, guid: 4a6a2a2595f6474469770886a66cce50,
     type: 3}
@@ -128,7 +128,7 @@ NavMeshAgent:
   m_Speed: 0.4
   m_Acceleration: 3.89
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 600
   m_StoppingDistance: 0.8
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -149,7 +149,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6622880c94f54b44d84ee91c56b1272e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 20
+  health: 765
+  bloodSprite: {fileID: 1724139830389362106, guid: 2239a3fe5b1cf5a409120e3087797f73,
+    type: 3}
 --- !u!54 &2973383771028675283
 Rigidbody:
   m_ObjectHideFlags: 0

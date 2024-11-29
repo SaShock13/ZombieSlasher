@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 4064708945029164819}
   - component: {fileID: 2747742157393013270}
   - component: {fileID: 7217721360375262391}
+  - component: {fileID: 145679761165696453}
+  - component: {fileID: 4342298221273233433}
   m_Layer: 7
   m_Name: ChainSow
   m_TagString: Untagged
@@ -29,7 +31,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2973606304175071895}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.6906736, z: -0, w: 0.72316664}
+  m_LocalRotation: {x: 0, y: -0.6906741, z: 0, w: 0.7231661}
   m_LocalPosition: {x: 0, y: 0.672, z: -0.336}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -56,7 +58,7 @@ MonoBehaviour:
   hideControllerOnAttach: 1
   handAnimationOnPickup: 0
   setRangeOfMotionOnPickup: -1
-  useHandObjectAttachmentPoint: 1
+  useHandObjectAttachmentPoint: 0
   attachEaseIn: 0
   snapAttachEaseInCurve:
     serializedVersion: 2
@@ -246,47 +248,13 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.17, y: 0.24079621, z: 0.46}
   m_Center: {x: 0, y: -0.020398164, z: -0.25}
---- !u!1 &5963983283440377052
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3812635336914453398}
-  - component: {fileID: 8236746423056846226}
-  - component: {fileID: 3948701888008651214}
-  - component: {fileID: 3064899886513440683}
-  m_Layer: 7
-  m_Name: SawAttackCollider
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3812635336914453398
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5963983283440377052}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1912740490595005022}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &8236746423056846226
+--- !u!65 &145679761165696453
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5963983283440377052}
+  m_GameObject: {fileID: 2973606304175071895}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -299,15 +267,15 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.009999995, y: 0.49750477, z: 0.09594685}
-  m_Center: {x: -0.05000068, y: 0.24124794, z: -0.07810953}
---- !u!114 &3948701888008651214
+  m_Size: {x: 0.015989836, y: 0.09210602, z: 0.45750818}
+  m_Center: {x: 0.04672958, y: -0.07183573, z: 0.22232202}
+--- !u!114 &4342298221273233433
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5963983283440377052}
+  m_GameObject: {fileID: 2973606304175071895}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fded97be02575d34c903d23d6c81747f, type: 3}
@@ -315,33 +283,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bloodFXPrefab: {fileID: 1036124491145626784, guid: bfd6f08a3b96b9d498ad580a0b889eaf,
     type: 3}
---- !u!54 &3064899886513440683
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5963983283440377052}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1001 &2090182783930897845
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -427,11 +368,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 301f547aa3bb96144ad1f798f72b550b,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3812635336914453398}
+    m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 301f547aa3bb96144ad1f798f72b550b,
         type: 3}
@@ -485,6 +422,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2180958642f70e649a3fbc74b89dd4ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  vibrationAction:
+    actionPath: /actions/default/out/Haptic
+    needsReinit: 0
 --- !u!82 &542000337358932722
 AudioSource:
   m_ObjectHideFlags: 0

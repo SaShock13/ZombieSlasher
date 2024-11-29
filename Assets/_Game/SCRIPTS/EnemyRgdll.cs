@@ -13,6 +13,7 @@ public class EnemyRgdll : MonoBehaviour
 
     public void StopConvulsing()
     {
+        Debug.Log("StopingConvulsingMEthod");
         StartCoroutine(StopConvulsionCoroutine());
     }
 

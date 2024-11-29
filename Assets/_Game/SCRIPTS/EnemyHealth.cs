@@ -10,11 +10,21 @@ public class EnemyHealth : MonoBehaviour
     private Enemy enemy;
     private Rigidbody rb;
     private Collider bodyCollider;
+    [SerializeField] GameObject bloodSprite;
+    private GameObject[] bloodSpritesPool = new GameObject[5];
+    int bloodSpritesCounter = 0;
+
 
     private void Start()
     {
+        Debug.Log("EnemyHealth Started");
+        for (int i = 0; i < 5; i++)
+        {
+            bloodSpritesPool[i] = Instantiate<GameObject>(bloodSprite);///НА каждом по5 создает, но выкидывает по 2 сразу
+            bloodSpritesPool[i].SetActive(false);
+        }
         animator = GetComponentInChildren<Animator>();
-        enemy = GetComponentInChildren<Enemy>();
+        enemy = GetComponent<Enemy>();
         rb = GetComponent<Rigidbody>();
         bodyCollider = GetComponent<Collider>();
     }
@@ -26,6 +36,15 @@ public class EnemyHealth : MonoBehaviour
 
             if (damage > 0)
             {
+
+                bloodSpritesPool[bloodSpritesCounter].transform.position = 
+                    new Vector3(
+                        transform.position.x, 
+                        bloodSpritesPool[bloodSpritesCounter].transform.position.y, 
+                        transform.position.z);
+                bloodSpritesPool[bloodSpritesCounter].SetActive(true);
+                bloodSpritesCounter++;
+                bloodSpritesCounter = bloodSpritesCounter >= 5 ? 0 : bloodSpritesCounter;
                 health -= damage;
                 print($"Health : {health}");
                 if (health <= 0)

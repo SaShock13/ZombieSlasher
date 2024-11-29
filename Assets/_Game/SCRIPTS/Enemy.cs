@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Valve.VR.InteractionSystem;
+using Zenject;
 
 public enum EnemyBehState
 {
@@ -16,6 +17,8 @@ public enum EnemyBehState
 public class Enemy : MonoBehaviour
 {
     private Transform playerTransform;
+
+    [Inject]private Player player;
     private Animator animator;
     private NavMeshAgent agent;
     public bool isAlive = true;
@@ -34,19 +37,31 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject enemyModelPrefab;
     [SerializeField] private GameObject enemyRagdollPrefab;
     private GameObject currentModel;
-    private GameObject currentRgdll;
+    private EnemyRgdll currentRgdll;
+    private Rigidbody[] rigidBodiesRagdoll;
+
 
     private void Awake()
     {
         currentModel = Instantiate<GameObject>(enemyModelPrefab, transform);
-        currentRgdll = Instantiate<GameObject>(enemyRagdollPrefab,transform.parent.transform);
-        playerTransform = FindObjectOfType<Player>().transform;
+        rigidBodiesRagdoll = GetComponentsInChildren<Rigidbody>();
+        foreach (var rb in rigidBodiesRagdoll)
+        {
+            rb.isKinematic = true;
+        }
+        playerTransform = player.transform;
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
         currentDestination = endTransform;
         stateHandler = GetComponent<EnemyStateHandler>();
         currentState = initialState;
 
+    }
+
+    private void Start()
+    {
+        currentRgdll = GetComponentInChildren<EnemyRgdll>();
+        Debug.Log($"Ragdoll found = {currentRgdll != null}");
     }
 
 
@@ -58,6 +73,10 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    //public GameObject GetRagdoll()
+    //{
+    //    return currentRgdll;
+    //}
 
     private void Update()
     {
@@ -67,19 +86,19 @@ public class Enemy : MonoBehaviour
             {
                 case EnemyBehState.Idle:
                     {
-                       ClearAnimationState();
+                        ClearAnimationState();
                         animator.SetTrigger("Idle");
                         break;
                     }
                 case EnemyBehState.Wandering:
                     {
-                        animator.SetBool("Walk",true);
+                        animator.SetBool("Walk", true);
                         agent.destination = currentDestination.position;
                         stateHandler.StartCheck();
 
                         remDist = agent.remainingDistance;
 
-                        if (agent.remainingDistance !=0 & agent.remainingDistance <= 0.8f & agent.remainingDistance!=float.PositiveInfinity & agent.remainingDistance!= float.NegativeInfinity)
+                        if (agent.remainingDistance != 0 & agent.remainingDistance <= 0.8f & agent.remainingDistance != float.PositiveInfinity & agent.remainingDistance != float.NegativeInfinity)
                         {
                             currentDestination = currentDestination == endTransform ? startTransform : endTransform;
                             agent.destination = currentDestination.position;
@@ -115,7 +134,11 @@ public class Enemy : MonoBehaviour
                 default: break;
             }
         }
-        else agent.isStopped =true;
+        else
+        {
+            agent.enabled = false;
+            //agent.isStopped = true;
+        }
     }
 
     private void ClearAnimationState()
@@ -125,12 +148,18 @@ public class Enemy : MonoBehaviour
 
     private void Death()
     {
-        currentModel.SetActive(false);
-        currentRgdll.transform.position = transform.position;
-        currentRgdll.transform.rotation = transform.rotation;
-        currentRgdll.SetActive(true);
-        currentRgdll.GetComponent<EnemyRgdll>().StopConvulsing();
+        //currentModel.SetActive(false);
+        //currentRgdll.transform.position = transform.position;
+        //currentRgdll.transform.rotation = transform.rotation;
+        foreach (var rb in rigidBodiesRagdoll)
+        {
+            rb.isKinematic = false;
+        }
+        animator.enabled = false;
+        //currentRgdll.SetActive(true);
+        currentRgdll.StopConvulsing();
         isAlive = false;
-        gameObject.SetActive(false);
+        //agent.enabled = false;
+        //gameObject.SetActive(false);
     }
 }
